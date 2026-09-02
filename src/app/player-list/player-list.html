@@ -1,0 +1,49 @@
+<h2>Players</h2>
+
+<div class="search-container">
+<input
+  type="text"
+  class="search-input"
+  placeholder="Search by first or last name..."
+  [ngModel]="searchQuery()"
+  (ngModelChange)="searchQuery.set($event)"
+>
+
+  <button (click)="sortBy('GP')"
+  title="Most Games Played">
+    Most GP
+  </button>
+
+  <button (click)="sortBy('PTS')"
+  title="Most Points Per Game">
+    Most PTS
+  </button>
+
+  <button (click)="sortBy('MIN')"
+  title="Most Minutes Per Game">
+    Most MIN
+  </button>
+
+  <button (click)="showAllPlayers()">
+    Reset
+  </button>
+
+</div>
+
+
+<div class="cards">
+  @for (player of filteredPlayers(); track player.id) {
+    <app-player-card
+      [firstName]="player.firstName"
+      [lastName]="player.lastName"
+      [age]="player.age"
+      [jerseyNumber]="player.jerseyNumber"
+      [photo]="player.photo"
+      [stats]="player.stats"
+      [highlightedStat]="selectedSort()">
+
+    </app-player-card>
+  } @empty {
+    <p class="no-results">No players found.</p>
+  }
+</div>

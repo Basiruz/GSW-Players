@@ -1,0 +1,124 @@
+.player-card {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 6px 20px rgba(53, 40, 63, 0.12);
+  text-align: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border: 1px solid rgba(29, 66, 138, 0.08);
+}
+
+.player-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 30px rgba(29, 66, 138, 0.22);
+}
+.player-card img {
+  width: 100px;
+  height: 100px;
+
+  object-fit: cover;
+  border-radius: 50%;
+
+  margin-bottom: 1rem;
+
+  border: 4px solid #FFC72C;
+  box-shadow: 0 4px 10px rgba(29, 66, 138, 0.15);
+}
+
+.player-card h2 {
+  margin: 0 0 1rem;
+
+  font-size: 1.25rem;
+  color: #35283f;
+}
+
+.player-card p {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+
+  background: #F0F4FA;
+  border-radius: 10px;
+
+  font-size: 0.9rem;
+  color: #4A5568;
+}
+
+.jersey-number {
+  font-weight: 600;
+  color: #1D428A;
+}
+
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(29, 66, 138, 0.1);
+}
+
+.stat.highlighted {
+  background: #FFC72C;
+  border: 2px solid #1D428A;
+  transform: scale(1.05);
+}
+
+.stat.highlighted .stats-label,
+.stat.highlighted .stats-value {
+  color: #1D428A;
+}
+
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #F0F4FA;
+  border-radius: 10px;
+  padding: 0.5rem 0.25rem;
+}
+
+.stats-label {
+  font-size: 0.7rem;
+  color: #4A5568;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stats-value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1D428A;
+  margin-top: 0.15rem;
+}
+
+.tooltip {
+  position: relative;
+  cursor: help;
+}
+
+.tooltip-text {
+  display: none;
+  position: absolute;
+
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  background-color: #333;
+  color: white;
+
+  padding: 6px 10px;
+  border-radius: 6px;
+
+  font-size: 12px;
+  white-space: nowrap;
+
+  z-index: 100;
+}
+
+.tooltip:hover .tooltip-text {
+  display: block;
+}

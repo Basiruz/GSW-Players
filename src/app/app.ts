@@ -1,11 +1,20 @@
 import { Component } from '@angular/core';
-import {HeaderComponent} from './header-component/header-component';
-import {UsersList} from './users-list/users-list';
+import { ConnectMessage } from '@artstesh/postboy';
+import { Subject } from 'rxjs';
+import { HeaderComponent } from './header-component/header-component';
+import { PlayerListComponent } from './player-list/player-list';
+import { postboy } from './postboy.instance';
+import { PlayersFilterChangedEvent } from './models/events/players-filter-changed.event';
 
 @Component({
   selector: 'app-root',
-  imports: [ HeaderComponent, UsersList],
+  standalone: true,
+  imports: [HeaderComponent, PlayerListComponent],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrls: ['./app.css']
 })
-export class App {}
+export class App {
+  constructor() {
+    postboy.exec(new ConnectMessage(PlayersFilterChangedEvent, new Subject<PlayersFilterChangedEvent>()));
+  }
+}
