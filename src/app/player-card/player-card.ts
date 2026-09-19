@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { PlayerStats } from '../models/player';
+import { PlayerFilterService } from '../service/player-filter.service';
+import { STAT_DEFINITIONS } from '../models/stat-definitions';
 
 @Component({
   selector: 'app-player-card',
@@ -14,20 +16,11 @@ export class PlayerCardComponent {
   @Input() jerseyNumber!: number;
   @Input() photo!: string;
   @Input() stats!: PlayerStats;
-  @Input() highlightedStat: keyof PlayerStats | null = null;
 
-  readonly statDefinitions: {
-    key: keyof PlayerStats;
-    description: string;
-  }[] = [
-    { key: 'GP', description: 'Games Played' },
-    { key: 'PTS', description: 'Points Per Game' },
-    { key: 'MIN', description: 'Minutes Per Game' },
-    { key: 'AST', description: 'Assists Per Game' },
-    { key: 'REB', description: 'Rebounds Per Game' },
-    { key: 'STL', description: 'Steals Per Game' },
-    { key: 'BLK', description: 'Blocks Per Game' },
-    { key: 'TO', description: 'Turnovers Per Game' },
-    { key: 'PF', description: 'Personal Fouls Per Game' }
-  ];
+  readonly highlightedStat;
+  readonly statDefinitions = STAT_DEFINITIONS;
+
+  constructor(private readonly playerFilterService: PlayerFilterService) {
+  this.highlightedStat = this.playerFilterService.selectedSort;
+  }
 }

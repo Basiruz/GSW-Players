@@ -1,0 +1,50 @@
+<div class="filter-container">
+<div class="search-container">
+  <input
+    type="text"
+    class="search-input"
+    placeholder="Search by first or last name..."
+    [ngModel]="searchQuery()"
+    (ngModelChange)="searchChanged($event)"
+  >
+
+  <button (click)="sortBy('GP')"
+          [title]="getStatDescription('GP')">
+    Most GP
+  </button>
+
+  <button (click)="sortBy('PTS')"
+          [title]="getStatDescription('PTS')">
+    Most PTS
+  </button>
+
+  <button (click)="sortBy('MIN')"
+          [title]="getStatDescription('MIN')">
+    Most MIN
+  </button>
+
+  <button (click)="showAllPlayers()">
+    Reset
+  </button>
+</div>
+  <div class="range-container">
+    <span class="range-label">Stat range:</span>
+    <input
+    type="number"
+    class="range-input"
+    placeholder="From"
+    [ngModel]="minValue()"
+    (ngModelChange)="minChanged($event)"
+    >
+
+    <span class="range-separator"></span>
+    <input
+      type="number"
+      class="range-input"
+      placeholder="To"
+      [ngModel]="maxValue()"
+      (ngModelChange)="maxChanged($event)"
+    >
+  </div>
+
+</div>

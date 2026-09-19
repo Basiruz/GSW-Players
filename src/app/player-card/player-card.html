@@ -8,7 +8,7 @@
 
   <div class="stats-grid">
     @for (stat of statDefinitions; track stat.key) {
-      <div class="stat" [class.highlighted]="highlightedStat === stat.key">
+      <div class="stat" [class.highlighted]="highlightedStat() === stat.key">
 
         <span class="stats-label tooltip">
           {{ stat.key }}

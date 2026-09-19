@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { postboy } from '../postboy.instance';
+import { AppPostboyService } from '../postboy/app-postboy.service';
 import { PlayersFilterChangedEvent } from '../models/events/players-filter-changed.event';
 
 @Component({
@@ -9,18 +9,32 @@ import { PlayersFilterChangedEvent } from '../models/events/players-filter-chang
   styleUrl: './header-component.css',
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  currentFilterLabel = signal('All players');
+  readonly currentFilterLabel = signal('All Players');
   private subscription?: Subscription;
 
+  constructor(private readonly postboy: AppPostboyService) { }
+
   ngOnInit(): void {
-    this.subscription = postboy.sub(PlayersFilterChangedEvent).subscribe((msg) => {
+    this.subscription = this.postboy
+      .sub(PlayersFilterChangedEvent)
+      .subscribe((msg) => {
+        let label = '';
+
       if (msg.sortBy) {
-        this.currentFilterLabel.set(`Sorted by ${msg.sortBy}`);
+        label = `Sorted by ${msg.sortBy}`;
+
+        if (msg.minValue !== null || msg.maxValue !== null) {
+          const min = msg.minValue ?? 'Any';
+          const max = msg.maxValue ?? 'Any';
+          label += ` | Range: ${min} - ${max}`;
+        }
+
+        this.currentFilterLabel.set(label);
       } else if (msg.searchQuery) {
         this.currentFilterLabel.set(`Searching: "${msg.searchQuery}"`);
       } else {
-        this.currentFilterLabel.set('All players');
-      }
+        this.currentFilterLabel.set('All Players');
+        }
     });
   }
 
