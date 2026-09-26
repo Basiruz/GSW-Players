@@ -1,5 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { PlayerService } from './player.service';
+import { AppPostboyService } from '../postboy/app-postboy.service';
+import { PlayersFilterChangedEvent } from '../models/events/players-filter-changed.event';
 
 export type SortStat = 'GP' | 'PTS' | 'MIN';
 
@@ -15,7 +17,8 @@ export class PlayerFilterService {
   readonly maxValue = signal<number | null>(null);
 
   constructor(
-    private readonly playerService: PlayerService
+    private readonly playerService: PlayerService,
+    private readonly postboy: AppPostboyService
   ) {}
 
   searchChanged(value: string): void {
@@ -63,7 +66,7 @@ export class PlayerFilterService {
     if (sortBy) {
       result = result.filter(player => {
         const value = player.stats[sortBy];
-        const aboveMin = min === null || value > min;
+        const aboveMin = min === null || value >= min;
         const belowMax = max === null || value <= max;
 
         return aboveMin && belowMax;
@@ -76,5 +79,14 @@ export class PlayerFilterService {
     }
 
     this.playerService.setPlayers(result);
+
+    this.postboy.fire(
+      new PlayersFilterChangedEvent(
+        this.searchQuery(),
+        this.selectedSort(),
+        this.minValue(),
+        this.maxValue()
+      )
+    );
   }
 }
