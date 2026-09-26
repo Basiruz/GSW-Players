@@ -1,14 +1,14 @@
 <div class="player-card">
-  <img [src]="photo" [alt]="firstName + ' ' + lastName">
+  <img [src]="photo()" [alt]="firstName() + ' ' + lastName()">
 
-  <h2>{{ firstName }} {{ lastName }}</h2>
+  <h2>{{ firstName() }} {{ lastName() }}</h2>
 
-  <p>Age: {{ age }} years</p>
-  <p class="jersey-number">Jersey Number: #{{ jerseyNumber }}</p>
+  <p>Age: {{ age() }} years</p>
+  <p class="jersey-number">Jersey Number: #{{ jerseyNumber() }}</p>
 
   <div class="stats-grid">
     @for (stat of statDefinitions; track stat.key) {
-      <div class="stat" [class.highlighted]="highlightedStat === stat.key">
+      <div class="stat" [class.highlighted]="highlightedStat() === stat.key">
 
         <span class="stats-label tooltip">
           {{ stat.key }}
@@ -19,7 +19,7 @@
         </span>
 
         <span class="stats-value">
-          {{ stats[stat.key] }}
+          {{ stats()[stat.key] }}
         </span>
       </div>
     }
